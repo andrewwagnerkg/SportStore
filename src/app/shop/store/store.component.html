@@ -6,12 +6,29 @@
     <tr>
       <td>
         <div>
-          {{categories.length}} Categories
+            <div>
+              <button (click)="resetCategory()">Home</button>
+            </div>
+
+            <div *ngFor="let category of categories">
+              <button (click)="setCategory(category)">{{category}}</button>
+            </div>
         </div>
       </td>
-      <td>
+      <td *ngFor="let product of products">
         <div>
-          {{products.length}} Products
+          <div>
+            <table>
+              <tr>
+                <td>
+                  <p>{{product.name}}</p>
+                </td>
+                <td>
+                  <p>{{product.price | currency:"2.2-2":"$"}}</p>
+                </td>
+              </tr>
+            </table>
+          </div>
         </div>
       </td>
     </tr>

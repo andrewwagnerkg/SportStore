@@ -9,17 +9,28 @@ import { Component, OnInit } from '@angular/core';
 })
 export class StoreComponent implements OnInit {
 
+  private currentcategory : string | null = null
+
   constructor(private productRep: ProductRepository) { }
 
   ngOnInit(): void {
   }
 
   get products() : Product[]{
-    return this.productRep.getProducts();
+    return this.productRep.getProductsByCategory(this.currentcategory);
   }
 
   get categories() : string []{
     return this.productRep.getCategories();
   }
+
+  resetCategory():void{
+    this.currentcategory = null;
+  }
+
+  setCategory(category:string):void{
+    this.currentcategory = category;
+  }
+
 
 }
