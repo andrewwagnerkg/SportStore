@@ -11,7 +11,7 @@
             </div>
 
             <div *ngFor="let category of categories">
-              <button (click)="setCategory(category)">{{category}}</button>
+              <button (click)="setCategory(category)" [class.buttonActive]="currentcategory == category">{{category}}</button>
             </div>
         </div>
       </td>
@@ -30,6 +30,19 @@
             </table>
           </div>
         </div>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <select [value]="countPerPage" #perpageCount (change)="changePageSize(perpageCount.value)">
+          <option value="3">3 per page</option>
+          <option value="4">4 per page</option>
+          <option value="6">6 per page</option>
+          <option value="8">8 per page</option>
+        </select>
+      </td>
+      <td>
+        <button *ngFor="let page of pageNumbers" [class.buttonActive]="page == currentPageIndex" (click)="changePage(page)">{{page}}</button>
       </td>
     </tr>
   </table>

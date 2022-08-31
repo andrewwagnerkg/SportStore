@@ -9,7 +9,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class StoreComponent implements OnInit {
 
-  private currentcategory : string | null = null
+  public currentcategory : string | null = null
+  public countPerPage = 3;
+  public currentPageIndex = 1;
 
   constructor(private productRep: ProductRepository) { }
 
@@ -17,7 +19,8 @@ export class StoreComponent implements OnInit {
   }
 
   get products() : Product[]{
-    return this.productRep.getProductsByCategory(this.currentcategory);
+    let index = (this.currentPageIndex - 1) * this.countPerPage;
+    return this.productRep.getProductsByCategory(this.currentcategory).slice(index, index + this.countPerPage);
   }
 
   get categories() : string []{
@@ -26,11 +29,26 @@ export class StoreComponent implements OnInit {
 
   resetCategory():void{
     this.currentcategory = null;
+    this.changePage(1);
   }
 
   setCategory(category:string):void{
     this.currentcategory = category;
+    this.changePage(1);
   }
 
+  changePage(newPage: number){
+    this.currentPageIndex = newPage;
+  }
+
+  changePageSize(newsize: string){
+    this.countPerPage = Number(newsize);
+    this.changePage(1);
+  }
+
+  get pageNumbers(): number[]{
+    return Array(Math.ceil(this.productRep
+      .getProductsByCategory(this.currentcategory).length / this.countPerPage)).fill(0).map((x, i) => i + 1);
+  }
 
 }
